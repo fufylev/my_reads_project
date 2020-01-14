@@ -1,10 +1,10 @@
-import React, {Component} from 'react'
+import React, {PureComponent} from 'react'
 import { Link } from 'react-router-dom';
 import * as BooksAPI from '../BooksAPI'
 import '../App.css'
 import Shelf from "./Shelf";
 
-class MainPage extends Component {
+class MainPage extends PureComponent {
     state = {
         books: [],
     };
@@ -13,13 +13,17 @@ class MainPage extends Component {
         BooksAPI.getAll()
             .then(books => this.setState(() => ({
                 books: books
-            })));
+            })))
+            .catch(e => console.log(e))
     };
 
     update = ({book, shelf}) => {
         // assumed that the response from the API server is always OK!
         BooksAPI.update(book, shelf)
-            .then(() => this.getAll());
+            .then((res) => {
+                this.getAll()
+            })
+            .catch(e => console.log(e))
     };
 
     componentDidMount() {
