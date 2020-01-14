@@ -9,6 +9,7 @@ const Shelf = props => {
         <div className="bookshelf">
             <h2 className="bookshelf-title">{shelf}</h2>
             <div className="bookshelf-books">
+                {books.length === 0 && <h3>No any books on this shelf</h3>}
                 <ol className="books-grid">
                     {books.map(book =>
                         <BookBlock
