@@ -40,12 +40,12 @@ class Search extends PureComponent {
         // very often your server response with an ERROR. Therefore... I had to apply some extra code
         BooksAPI.search(query)
             .then(books => {
-                if (books.error) {
+                if (query === this.state.query && books.error) {
                     // show to User the message that 'No matches regards your query'
                     this.setState((prevState) => ({
                         ...prevState, searchedBooks: [], query, ifSearchSuccess: false
                     }))
-                } else {
+                } else if (query === this.state.query) {
                     this.shelfAssign(books);
                 }
             })

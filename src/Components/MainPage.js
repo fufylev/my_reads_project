@@ -4,6 +4,13 @@ import * as BooksAPI from '../BooksAPI'
 import '../App.css'
 import Shelf from "./Shelf";
 
+// form a mapping array in oder to reduce an HTML code
+const shelves = [
+    {shelf: 'Currently Reading', filter: 'currentlyReading'},
+    {shelf: 'Want to Read', filter: 'wantToRead'},
+    {shelf: 'Read', filter: 'read'},
+];
+
 class MainPage extends PureComponent {
     state = {
         books: [],
@@ -31,16 +38,7 @@ class MainPage extends PureComponent {
     }
 
     render() {
-        const currentlyReading = this.state.books.filter(book => book.shelf === 'currentlyReading');
-        const wantToRead = this.state.books.filter(book => book.shelf === 'wantToRead');
-        const read = this.state.books.filter(book => book.shelf === 'read');
-
-        // form an array in oder to reduce an HTML code
-        const arr = [
-            {shelf: 'Currently Reading', books: currentlyReading},
-            {shelf: 'Want to Read', books: wantToRead},
-            {shelf: 'Read', books: read},
-        ];
+        const {books} = this.state;
 
         return (
             <div className="app">
@@ -50,9 +48,9 @@ class MainPage extends PureComponent {
                     </div>
                     <div className="list-books-content">
                         <div>
-                            {arr.map(el => (
+                            {shelves.map(el => (
                                 <Shelf key={el.shelf}
-                                       books={el.books}
+                                       books={books.filter(book => book.shelf === el.filter)}
                                        onChangeShelf={this.update}
                                        shelf={el.shelf}
                                 />
